@@ -8,6 +8,8 @@ import 'package:got_app/features/houses_list/data/repositories/got_houses_reposi
 import 'package:got_app/features/houses_list/domain/repositories/got_houses_repository.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
+import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_state.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 
 class HousesListFeature implements InjectionFeature {
   @override
@@ -33,6 +35,12 @@ class HousesListFeature implements InjectionFeature {
       ..registerFactory<GetHousesUseCase>(
         () => GetHousesUseCaseImpl(
           gotHousesRepository: injector.get<GOTHousesRepository>(),
+        ),
+      )
+      ..registerFactory<GOTHousesStateBackup>(
+        () => GOTHousesStateBackup(
+          getHousesUseCase: injector.get<GetHousesUseCase>(),
+          getCharactersImageUseCase: injector.get<GetCharactersImageUseCase>(),
         ),
       );
   }

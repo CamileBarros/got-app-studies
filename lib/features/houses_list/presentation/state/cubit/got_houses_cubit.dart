@@ -15,7 +15,6 @@ class GOTHousesCubit extends Cubit<GOTHousesStateData> {
 
   Future<void> loadHouses() async {
     emit(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
-
     try {
       final houses = await getHousesUseCase();
       emit(GOTHousesStateData(
@@ -31,13 +30,11 @@ class GOTHousesCubit extends Cubit<GOTHousesStateData> {
   }
 
   Future<void> loadCharactersImage() async {
-    emit(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
-
     try {
       final charactersImage = await getCharactersImageUseCase();
       emit(GOTHousesStateData(
         stateEnum: GOTHousesStateEnum.charactersImageLoaded,
-        houses: state.houses, 
+        houses: state.houses,
         charactersImage: charactersImage,
       ));
     } catch (e) {
@@ -46,23 +43,5 @@ class GOTHousesCubit extends Cubit<GOTHousesStateData> {
         errorMessage: e.toString(),
       ));
     }
-  }
-
-  void onPageChanged(int pageIndex) {
-    emit(GOTHousesStateData(
-      stateEnum: GOTHousesStateEnum.pageChanged,
-      currentPage: pageIndex,
-      houses: state.houses, 
-      charactersImage: state.charactersImage, 
-    ));
-  }
-
-  void pageViewController(PageController pageController) {
-    emit(GOTHousesStateData(
-      stateEnum: GOTHousesStateEnum.pageViewController,
-      pageController: pageController,
-      houses: state.houses, 
-      charactersImage: state.charactersImage, 
-    ));
   }
 }

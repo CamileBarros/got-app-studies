@@ -4,12 +4,11 @@ import 'package:got_app/features/houses_list/domain/entities/get_characters_imag
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 
 enum GOTHousesStateEnum {
+  initial,
   loading,
   loaded,
   error,
   charactersImageLoaded,
-  pageChanged,
-  pageViewController,
 }
 
 abstract class GOTHousesState extends Equatable {
@@ -24,15 +23,11 @@ class GOTHousesStateData extends GOTHousesState {
   final List<GetHousesListEntity> houses;
   final String errorMessage;
   final List<GetCharactersImageEntity> charactersImage;
-  final int currentPage;
-  final PageController? pageController;
   const GOTHousesStateData({
     required this.stateEnum,
     this.houses = const [],
     this.errorMessage = '',
     this.charactersImage = const [],
-    this.currentPage = 0,
-    this.pageController,
   });
 
   @override
@@ -41,7 +36,5 @@ class GOTHousesStateData extends GOTHousesState {
         houses,
         errorMessage,
         charactersImage,
-        currentPage,
-        pageController,
       ];
 }

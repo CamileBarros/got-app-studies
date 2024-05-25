@@ -6,6 +6,7 @@ import 'package:got_app/features/houses_list/domain/use_cases/get_characters_ima
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
 import 'package:got_app/features/houses_list/presentation/pages/got_houses_page.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_cubit.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,12 +31,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: BlocProvider(
-          create: (context) => GOTHousesCubit(
-            getHousesUseCase: GetIt.I.get<GetHousesUseCase>(),
-            getCharactersImageUseCase: GetIt.I.get<GetCharactersImageUseCase>(),
-          ),
-          child: const HousesPage(),
+        home: HousesPage(
+          gotHousesStateBackup: GetIt.I.get<GOTHousesStateBackup>(),
         ));
   }
 }
