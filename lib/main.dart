@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:got_app/features/core/injection/got_app_dependency_inicializer.dart';
+import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
+import 'package:got_app/features/houses_list/domain/entities/members_house_entity.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
+import 'package:got_app/features/houses_list/presentation/pages/got_house_list_details.dart';
 import 'package:got_app/features/houses_list/presentation/pages/got_houses_page.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_cubit.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
@@ -31,8 +34,27 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: HousesPage(
-          gotHousesStateBackup: GetIt.I.get<GOTHousesStateBackup>(),
-        ));
+        initialRoute: '/houses',
+        routes: {
+          '/houses': (context) => HousesPage(
+                gotHousesStateBackup: GetIt.I.get<GOTHousesStateBackup>(),
+              ),
+          '/house_list_details': (context) {
+            final Map<String, dynamic> arguments = ModalRoute.of(context)
+                ?.settings
+                .arguments as Map<String, dynamic>;
+            final String title = arguments['title'] as String;
+            final List<MembersHouseEntity> membersHouse =
+                arguments['membersHouse'] as List<MembersHouseEntity>;
+            final List<GetCharactersImageEntity> imageCharacters =
+                arguments['imageCharacters'] as List<GetCharactersImageEntity>;
+
+            return HouseListDetails(
+              membersHouse: membersHouse,
+              imageCharacters: imageCharacters,
+              title: title,
+            );
+          }
+        });
   }
 }

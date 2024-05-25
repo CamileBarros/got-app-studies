@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_cubit.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_state.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
+import 'package:got_app/features/houses_list/presentation/widgets/got_app_bar.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/page_view_houses_card.dart';
 import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 
@@ -17,7 +18,7 @@ class HousesPage extends StatefulWidget {
 class _HousesPageState extends State<HousesPage> {
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
     await widget.gotHousesStateBackup.getHouses();
     await widget.gotHousesStateBackup.getCharactersImage();
     });
@@ -28,22 +29,7 @@ class _HousesPageState extends State<HousesPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text(
-            'Game of Thrones Houses',
-            style: TextStyle(fontSize: 14),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: IconButton(
-                icon: const Icon(Icons.search_rounded),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
+        appBar: const GOTAppBar(title: 'Game of Thrones Houses',),
         body: ValueListenableBuilder(
             valueListenable: widget.gotHousesStateBackup.statusPage,
             builder: (_, GOTHousesListPageStateEnum status, __) {

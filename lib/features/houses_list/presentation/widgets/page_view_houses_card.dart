@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
+import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 
 class PageViewHousesCard extends StatelessWidget {
   final GOTHousesStateBackup gotHousesStateBackup;
@@ -12,8 +13,14 @@ class PageViewHousesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ValueListenableBuilder(
-        valueListenable: gotHousesStateBackup.currentPage,
-        builder: (_, currentPage, __) => PageView(
+      valueListenable: gotHousesStateBackup.currentPage,
+      builder: (_, currentPage, __) {
+        if (gotHousesStateBackup.housesList.value.isEmpty) {
+          return const Center(
+            child: Text('No houses available'),
+          );
+        }
+        return PageView(
             controller: gotHousesStateBackup.pageController.value,
             onPageChanged: gotHousesStateBackup.onPageChanged,
             children: gotHousesStateBackup.housesList.value.map((house) {
@@ -43,7 +50,17 @@ class PageViewHousesCard extends StatelessWidget {
                       const SizedBox(height: 32),
                       CardButtonHouses(
                         size: EducationalBannerSize.medium,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/house_list_details',
+                            arguments: {
+                              'membersHouse': house.members,
+                              'imageCharacters':
+                                  gotHousesStateBackup.imageCharacters.value,
+                              'title': house.name,
+                            },
+                          );
+                        },
                         description: house.name,
                         colorBanner1: const Color.fromARGB(255, 1, 59, 106),
                         colorBanner2: const Color.fromARGB(255, 155, 200, 237),
@@ -52,5 +69,6 @@ class PageViewHousesCard extends StatelessWidget {
                   ),
                 ),
               );
-            }).toList()));
+            }).toList());
+      });
 }
