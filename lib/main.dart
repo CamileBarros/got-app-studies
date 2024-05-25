@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:got_app/features/core/injection/app_component.dart';
+import 'package:got_app/features/core/injection/got_app_dependency_inicializer.dart';
 import 'package:got_app/features/houses_list/presentation/pages/got_houses_page.dart';
 
 Future<void> main() async {
@@ -11,7 +11,7 @@ Future<void> main() async {
 }
 
 Future<void> initializeInjection() async {
-  await AppInjectionComponent.instance.registerFeatures();
+  await GotAppDependencyInitializer.instance.registerFeatures();
 }
 
 class MyApp extends StatelessWidget {

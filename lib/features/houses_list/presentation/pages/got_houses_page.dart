@@ -1,9 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:got_app/features/houses_list/data/data_source/got_houses_data_source.dart';
-import 'package:got_app/features/houses_list/data/repositories/got_houses_repository_impl.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_cubit.dart';
