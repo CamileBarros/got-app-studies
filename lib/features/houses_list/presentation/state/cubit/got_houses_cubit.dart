@@ -1,42 +1,68 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
 import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_state.dart';
 
-class GOTHousesCubit extends Cubit<GOTHousesState> {
+class GOTHousesCubit extends Cubit<GOTHousesStateData> {
   GOTHousesCubit({
-    required housesUseCase,
-    required charactersImageUseCase,
-  })  : _getHousesUseCase = housesUseCase,
-        _getcharactersImageUseCase = charactersImageUseCase,
-        super(GOTHousesInitial());
+    required this.getHousesUseCase,
+    required this.getCharactersImageUseCase,
+  }) : super(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
 
-  final GetHousesUseCase _getHousesUseCase;
-  final GetCharactersImageUseCase _getcharactersImageUseCase;
+  final GetHousesUseCase getHousesUseCase;
+  final GetCharactersImageUseCase getCharactersImageUseCase;
 
-  Future<void> getHouses() async {
-    emit(GOTHousesLoading());
+  Future<void> loadHouses() async {
+    emit(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
 
     try {
-      final houses = await _getHousesUseCase();
-      emit(GOTHousesLoaded(houses));
+      final houses = await getHousesUseCase();
+      emit(GOTHousesStateData(
+        stateEnum: GOTHousesStateEnum.loaded,
+        houses: houses,
+      ));
     } catch (e) {
-      emit(HousesError(e.toString()));
+      emit(GOTHousesStateData(
+        stateEnum: GOTHousesStateEnum.error,
+        errorMessage: e.toString(),
+      ));
     }
   }
 
-  Future<void> getCharactersImage() async {
-    emit(GOTHousesLoading());
+  Future<void> loadCharactersImage() async {
+    emit(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
 
     try {
-      final charactersImage = await _getcharactersImageUseCase();
-      emit(GOTHousesCharactersImageLoaded(charactersImage));
+      final charactersImage = await getCharactersImageUseCase();
+      emit(GOTHousesStateData(
+        stateEnum: GOTHousesStateEnum.charactersImageLoaded,
+        houses: state.houses, 
+        charactersImage: charactersImage,
+      ));
     } catch (e) {
-      emit(HousesError(e.toString()));
+      emit(GOTHousesStateData(
+        stateEnum: GOTHousesStateEnum.error,
+        errorMessage: e.toString(),
+      ));
     }
   }
 
-   void onPageChanged(int value) {
-    emit(PageChanged(value));
+  void onPageChanged(int pageIndex) {
+    emit(GOTHousesStateData(
+      stateEnum: GOTHousesStateEnum.pageChanged,
+      currentPage: pageIndex,
+      houses: state.houses, 
+      charactersImage: state.charactersImage, 
+    ));
+  }
+
+  void pageViewController(PageController pageController) {
+    emit(GOTHousesStateData(
+      stateEnum: GOTHousesStateEnum.pageViewController,
+      pageController: pageController,
+      houses: state.houses, 
+      charactersImage: state.charactersImage, 
+    ));
   }
 }

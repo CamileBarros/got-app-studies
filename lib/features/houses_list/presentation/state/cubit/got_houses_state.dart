@@ -1,46 +1,47 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 
+enum GOTHousesStateEnum {
+  loading,
+  loaded,
+  error,
+  charactersImageLoaded,
+  pageChanged,
+  pageViewController,
+}
+
 abstract class GOTHousesState extends Equatable {
   const GOTHousesState();
-  
+
   @override
   List<Object?> get props => [];
 }
 
-class GOTHousesInitial extends GOTHousesState {}
-
-class GOTHousesLoading extends GOTHousesState {}
-
-class GOTHousesLoaded extends GOTHousesState {
+class GOTHousesStateData extends GOTHousesState {
+  final GOTHousesStateEnum stateEnum;
   final List<GetHousesListEntity> houses;
-
-  const GOTHousesLoaded(this.houses);
-
-  @override
-  List<Object?> get props => [houses];
-}
-
-class GOTHousesCharactersImageLoaded extends GOTHousesState {
+  final String errorMessage;
   final List<GetCharactersImageEntity> charactersImage;
-
-  const GOTHousesCharactersImageLoaded(this.charactersImage);
-
-  @override
-  List<Object?> get props => [charactersImage];
-}
-
-class HousesError extends GOTHousesState {
-  final String message;
-
-  const HousesError(this.message);
-
-  @override
-  List<Object?> get props => [message];
-}
-class PageChanged extends GOTHousesState {
   final int currentPage;
+  final PageController? pageController;
+  const GOTHousesStateData({
+    required this.stateEnum,
+    this.houses = const [],
+    this.errorMessage = '',
+    this.charactersImage = const [],
+    this.currentPage = 0,
+    this.pageController,
+  });
 
-  const PageChanged(this.currentPage);
+  @override
+  List<Object?> get props => [
+        stateEnum,
+        houses,
+        errorMessage,
+        charactersImage,
+        currentPage,
+        pageController,
+      ];
 }

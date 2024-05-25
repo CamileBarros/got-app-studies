@@ -4,7 +4,6 @@ import 'package:got_app/features/houses_list/data/model/get_houses_model_respons
 
 abstract class GOTHousesDatasource {
   Future<List<GetHousesListResponseModel>> getHouses();
-  // Future<List<GetHousesListResponseModel>> getHouseMembers(String houseSlug);
   Future<List<GetCharactersImageResponseModel>> getCharactersImage();
 }
 

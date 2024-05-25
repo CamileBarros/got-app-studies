@@ -56,7 +56,7 @@ class CardButtonHouses extends StatelessWidget {
               if (title.isNotEmpty) ...[
                 Text(
                   title,
-                  // style: MidasTypography.h4Book.copyWith(color: colorText),
+             
                 ),
                 const SizedBox(height: 8),
               ],
