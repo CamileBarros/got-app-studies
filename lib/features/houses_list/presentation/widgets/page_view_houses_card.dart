@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
+import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 
 class PageViewHousesCard extends StatelessWidget {
   final GOTHousesStateBackup gotHousesStateBackup;
@@ -10,17 +11,28 @@ class PageViewHousesCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => ValueListenableBuilder(
-      valueListenable: gotHousesStateBackup.currentPage,
-      builder: (_, currentPage, __) {
-        if (gotHousesStateBackup.housesList.value.isEmpty) {
+  Widget build(BuildContext context) => AnimatedBuilder(
+      animation: Listenable.merge([
+        gotHousesStateBackup.statusPage,
+        gotHousesStateBackup.currentPage,
+      ]),
+      builder: (_, __) {
+        if (gotHousesStateBackup.statusPage.value ==
+            GOTHousesListPageStateEnum.loading) {
           return const Center(
-            child: Text('No houses available'),
+            child: CircularProgressIndicator(),
+          );
+        } else if (gotHousesStateBackup.statusPage.value ==
+            GOTHousesListPageStateEnum.error) {
+          return Center(
+            child: Text(gotHousesStateBackup.errorMessage.value),
           );
         }
+    
         return Column(
           children: [
-            Flexible(
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height / 2,
               child: PageView(
                   controller: gotHousesStateBackup.pageController.value,
                   onPageChanged: gotHousesStateBackup.onPageChanged,
@@ -63,7 +75,8 @@ class PageViewHousesCard extends StatelessWidget {
                                 );
                               },
                               description: house.name,
-                              colorBanner1: const Color.fromARGB(255, 1, 59, 106),
+                              colorBanner1:
+                                  const Color.fromARGB(255, 1, 59, 106),
                               colorBanner2:
                                   const Color.fromARGB(255, 155, 200, 237),
                             ),
@@ -73,24 +86,20 @@ class PageViewHousesCard extends StatelessWidget {
                     );
                   }).toList()),
             ),
-            ValueListenableBuilder<int>(
-              valueListenable: gotHousesStateBackup.currentPage,
-              builder: (context, value, child) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(gotHousesStateBackup.housesList.value.length, (index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: value == index ? Colors.blue : Colors.grey,
-                      ),
-                    );
-                  }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                  gotHousesStateBackup.housesList.value.length, (index) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: gotHousesStateBackup.currentPage.value == index ? Colors.blue : Colors.grey,
+                  ),
                 );
-              },
+              }),
             ),
           ],
         );

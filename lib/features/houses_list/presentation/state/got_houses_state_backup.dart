@@ -17,10 +17,12 @@ class GOTHousesStateBackup {
       ValueNotifier<List<GetHousesListEntity>>([]);
   ValueNotifier<List<GetCharactersImageEntity>> imageCharacters =
       ValueNotifier<List<GetCharactersImageEntity>>([]);
-  ValueNotifier<GOTHousesListPageStateEnum> statusPage = ValueNotifier(GOTHousesListPageStateEnum.loading);
+  ValueNotifier<GOTHousesListPageStateEnum> statusPage =
+      ValueNotifier(GOTHousesListPageStateEnum.loading);
   ValueNotifier<String> errorMessage = ValueNotifier('');
   ValueNotifier<int> currentPage = ValueNotifier<int>(0);
-  ValueNotifier<PageController> pageController = ValueNotifier<PageController>(PageController());
+  ValueNotifier<PageController> pageController =
+      ValueNotifier<PageController>(PageController());
 
   void onPageChanged(int index) {
     currentPage.value = index;
@@ -32,30 +34,42 @@ class GOTHousesStateBackup {
 
   Future<void> getHouses() async {
     final result = await getHousesUseCase.call();
-    
-   try {
-      if(result.isNotEmpty) {
-        housesList.value = result;
-        setStatusPage(GOTHousesListPageStateEnum.loaded);
 
+    try {
+      if (result.isNotEmpty) {
+        housesList.value = result;
+      } else {
+        errorMessage.value = 'Error to get houses';
+        setStatusPage(GOTHousesListPageStateEnum.error);
       }
     } catch (e) {
       errorMessage.value = e.toString();
-      
+      setStatusPage(GOTHousesListPageStateEnum.error);
     }
   }
 
   Future<void> getCharactersImage() async {
     final result = await getCharactersImageUseCase.call();
-    
-   try {
-      if(result.isNotEmpty) {
+
+    try {
+      if (result.isNotEmpty) {
         imageCharacters.value = result;
-        setStatusPage(GOTHousesListPageStateEnum.loaded);
+      } else {
+        errorMessage.value = 'Error to get characters image';
+        setStatusPage(GOTHousesListPageStateEnum.error);
       }
     } catch (e) {
       errorMessage.value = e.toString();
+      setStatusPage(GOTHousesListPageStateEnum.error);
+    }
+  }
+
+  Future<void> loadData() async {
+    setStatusPage(GOTHousesListPageStateEnum.loading);
+    await getHouses();
+    await getCharactersImage();
+    if (housesList.value.isNotEmpty && imageCharacters.value.isNotEmpty) {
+      setStatusPage(GOTHousesListPageStateEnum.loaded);
     }
   }
 }
- 
