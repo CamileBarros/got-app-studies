@@ -8,7 +8,7 @@ import 'package:got_app/features/houses_list/data/repositories/got_houses_list_r
 import 'package:got_app/features/houses_list/domain/repositories/got_houses_list_repository.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
-import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_list_state.dart';
 
 class GOTHousesListFeature implements InjectionFeature {
   @override
@@ -36,8 +36,8 @@ class GOTHousesListFeature implements InjectionFeature {
           gotHousesRepository: injector.get<GOTHousesListRepository>(),
         ),
       )
-      ..registerFactory<GOTHousesStateBackup>(
-        () => GOTHousesStateBackup(
+      ..registerFactory<GOTHousesListState>(
+        () => GOTHousesListState(
           getHousesUseCase: injector.get<GetHousesListUseCase>(),
           getCharactersImageUseCase: injector.get<GetCharactersImageUseCase>(),
         ),

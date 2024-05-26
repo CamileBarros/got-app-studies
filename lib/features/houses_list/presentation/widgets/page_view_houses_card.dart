@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_list_state.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
 import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
-import 'package:got_app/features/houses_list/utils/enum/houses_enum.dart';
 import 'package:got_app/features/houses_list/utils/helpers/got_house_list_helper.dart';
-import 'package:lottie/lottie.dart';
 
 class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
-  final GOTHousesStateBackup gotHousesStateBackup;
+  final GOTHousesListState gotHousesStateBackup;
   const PageViewHousesCard({
     super.key,
     required this.gotHousesStateBackup,
@@ -84,10 +81,9 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
                                 );
                               },
                               imageUrl: getPathByHouseName(house.name),
-                              description:
+                              text:
                                   house.name.replaceAll('House ', 'House\n'),
-                              colorBanner1: const Color.fromARGB(255, 243, 243, 243),
-                              colorBanner2: getColorByHouseName(house.name),
+                              colorSecondary: getColorByHouseName(house.name),
                             ),
                           ],
                         ),

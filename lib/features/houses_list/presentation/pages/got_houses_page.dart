@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_list_state.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/got_app_bar.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/page_view_houses_card.dart';
 
 class HousesPage extends StatefulWidget {
   const HousesPage({required this.gotHousesStateBackup, super.key});
-  final GOTHousesStateBackup gotHousesStateBackup;
+  final GOTHousesListState gotHousesStateBackup;
 
   @override
   State<HousesPage> createState() => _HousesPageState();

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 enum EducationalBannerSize {
@@ -9,23 +8,17 @@ enum EducationalBannerSize {
 
 class CardButtonHouses extends StatelessWidget {
   const CardButtonHouses({
-    required this.description,
+    required this.text,
     required this.onTap,
     required this.imageUrl,
-    this.title = '',
-    this.colorBanner1 = Colors.black,
-    this.colorBanner2 = Colors.black,
-    this.colorText = Colors.white,
-    this.borderColor = Colors.black,
+    this.colorSecondary = Colors.black,
+    this.colorPrimary = Colors.white,
     super.key,
   });
-  final String description;
-  final String title;
+  final String text;
   final VoidCallback onTap;
-  final Color? colorBanner1;
-  final Color? colorBanner2;
-  final Color? colorText;
-  final Color? borderColor;
+  final Color? colorSecondary;
+  final Color? colorPrimary;
   final String imageUrl;
 
   @override
@@ -42,8 +35,8 @@ class CardButtonHouses extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    colorBanner1 ?? Colors.black,
-                    colorBanner2 ?? Colors.black,
+                    Colors.white,
+                    colorSecondary ?? Colors.black,
                   ]),
               borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
@@ -64,7 +57,7 @@ class CardButtonHouses extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       child: Text(
-                        description,
+                        text,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                         style: const TextStyle(

@@ -1,49 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/members_house_entity.dart';
+import 'package:got_app/features/houses_list/presentation/state/got_houses_list_state.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/got_app_bar.dart';
+import 'package:got_app/features/houses_list/presentation/widgets/house_list_details.dart';
+import 'package:got_app/features/houses_list/presentation/widgets/loading_banner_house.dart';
 import 'package:got_app/features/houses_list/utils/helpers/got_house_list_details_helper.dart';
 
-class HouseListDetails extends StatefulWidget with GOTHouseListDetailsHelper {
+class HouseListDetailsPage extends StatefulWidget with GOTHouseListDetailsHelper {
   final List<MembersHouseEntity> membersHouse;
   final List<GetCharactersImageEntity> imageCharacters;
+  final GOTHousesListState gotHousesStateBackup;
   final String title;
   final Color? colorTitle;
   final String imageUrl;
-  const HouseListDetails({
+  const HouseListDetailsPage({
     required this.membersHouse,
     required this.imageCharacters,
-    super.key,
     required this.title,
     required this.colorTitle,
     required this.imageUrl,
+    required this.gotHousesStateBackup,
+    super.key,
   });
 
   @override
-  State<HouseListDetails> createState() => _HouseListDetailsState();
+  State<HouseListDetailsPage> createState() => _HouseListDetailsState();
 }
 
-class _HouseListDetailsState extends State<HouseListDetails> {
-  bool _showList = false;
+class _HouseListDetailsState extends State<HouseListDetailsPage> {
+  GOTHousesListState get gotHousesStateBackup => widget.gotHousesStateBackup;
+  bool showBannerHouse = false;
 
   @override
   void initState() {
+    loadBannerHouse();
     super.initState();
-    _loadData();
   }
 
-  Future<void> _loadData() async {
+  Future<void> loadBannerHouse() async {
     await Future.delayed(const Duration(milliseconds: 800));
     setState(() {
-      _showList = true;
+      showBannerHouse = true;
     });
   }
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: _showList ? Colors.white : widget.colorTitle,
-        appBar: _showList
+        backgroundColor: widget.getBackgroundColor(
+          showBannerHouse,
+          widget.colorTitle,
+        ),
+        appBar: showBannerHouse
             ? GOTAppBar(
                 title: widget.title,
               )
@@ -53,67 +61,18 @@ class _HouseListDetailsState extends State<HouseListDetails> {
           transitionBuilder: (Widget child, Animation<double> animation) {
             return FadeTransition(opacity: animation, child: child);
           },
-          child: _showList
-              ? Builder(builder: (context) {
-                  if (widget.membersHouse.isEmpty) {
-                    return const Center(
-                      child: Text('No houses available'),
-                    );
-                  }
-                  return Column(
-                    children: [
-                      Text(
-                        textAlign: TextAlign.center,
-                        widget.title.replaceAll('of ', 'of\n'),
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'Cinzel',
-                          fontWeight: FontWeight.bold,
-                          color: widget.colorTitle,
-                        ),
-                      ),
-                      Flexible(
-                        child: ListView.separated(
-                          itemCount: widget.membersHouse.length,
-                          itemBuilder: (_, int index) {
-                            final member = widget.membersHouse[index];
-
-                            return ListTile(
-                              title: Text(widget.membersHouse[index].name),
-                              subtitle: Text(widget.getMemberTitle(
-                                  member.slug, widget.imageCharacters)),
-                              leading: widget.getImageUrl(member.slug,
-                                          widget.imageCharacters) !=
-                                      ''
-                                  ? CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          widget.getImageUrl(member.slug,
-                                              widget.imageCharacters)),
-                                    )
-                                  : const Icon(Icons.person),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return Container(
-                              height: 8,
-                              color: const Color.fromARGB(255, 236, 233, 233),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
-                })
-              : _buildLoadingScreen(),
+          child: showBannerHouse
+              ? HouseListDetails(
+                  membersHouse: widget.membersHouse,
+                  imageCharacters: widget.imageCharacters,
+                  title: widget.title,
+                  colorTitle: widget.colorTitle,
+                  imageUrl: widget.imageUrl,
+                  gotHousesStateBackup: gotHousesStateBackup,
+                )
+              : LoadingBannerHouse(
+                  imageUrl: widget.imageUrl,
+                ),
         ),
       );
-
-  Widget _buildLoadingScreen() {
-    return Center(
-      child: SvgPicture.asset(
-        height: MediaQuery.sizeOf(context).height / 3.5,
-        'assets/images/${widget.imageUrl}',
-      ),
-    );
-  }
 }

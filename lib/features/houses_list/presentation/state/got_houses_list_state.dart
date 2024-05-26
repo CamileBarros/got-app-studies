@@ -5,8 +5,8 @@ import 'package:got_app/features/houses_list/domain/use_cases/get_characters_ima
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
 import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 
-class GOTHousesStateBackup {
-  GOTHousesStateBackup({
+class GOTHousesListState {
+  GOTHousesListState({
     required this.getHousesUseCase,
     required this.getCharactersImageUseCase,
   });
