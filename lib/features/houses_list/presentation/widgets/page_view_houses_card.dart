@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
-import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 
 class PageViewHousesCard extends StatelessWidget {
   final GOTHousesStateBackup gotHousesStateBackup;
@@ -78,22 +76,19 @@ class PageViewHousesCard extends StatelessWidget {
             ValueListenableBuilder<int>(
               valueListenable: gotHousesStateBackup.currentPage,
               builder: (context, value, child) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 300),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(gotHousesStateBackup.housesList.value.length, (index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: value == index ? Colors.blue : Colors.grey,
-                        ),
-                      );
-                    }),
-                  ),
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(gotHousesStateBackup.housesList.value.length, (index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: value == index ? Colors.blue : Colors.grey,
+                      ),
+                    );
+                  }),
                 );
               },
             ),

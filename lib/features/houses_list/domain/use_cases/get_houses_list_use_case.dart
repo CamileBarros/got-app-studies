@@ -1,12 +1,12 @@
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
-import 'package:got_app/features/houses_list/domain/repositories/got_houses_repository.dart';
+import 'package:got_app/features/houses_list/domain/repositories/got_houses_list_repository.dart';
 
-abstract class GetHousesUseCase {
+abstract class GetHousesListUseCase {
   Future<List<GetHousesListEntity>> call();
 }
 
-class GetHousesUseCaseImpl implements GetHousesUseCase {
-  final GOTHousesRepository gotHousesRepository;
+class GetHousesUseCaseImpl implements GetHousesListUseCase {
+  final GOTHousesListRepository gotHousesRepository;
 
   GetHousesUseCaseImpl({required this.gotHousesRepository,});
 

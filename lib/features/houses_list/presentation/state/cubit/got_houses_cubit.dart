@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
@@ -10,7 +9,7 @@ class GOTHousesCubit extends Cubit<GOTHousesStateData> {
     required this.getCharactersImageUseCase,
   }) : super(const GOTHousesStateData(stateEnum: GOTHousesStateEnum.loading));
 
-  final GetHousesUseCase getHousesUseCase;
+  final GetHousesListUseCase getHousesUseCase;
   final GetCharactersImageUseCase getCharactersImageUseCase;
 
   Future<void> loadHouses() async {

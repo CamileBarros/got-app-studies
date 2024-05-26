@@ -3,43 +3,42 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:got_app/features/core/injection/injection.dart';
 import 'package:got_app/features/core/injection/injection_feature.dart';
-import 'package:got_app/features/houses_list/data/data_source/got_houses_data_source.dart';
-import 'package:got_app/features/houses_list/data/repositories/got_houses_repository_impl.dart';
-import 'package:got_app/features/houses_list/domain/repositories/got_houses_repository.dart';
+import 'package:got_app/features/houses_list/data/data_source/got_houses_list_data_source.dart';
+import 'package:got_app/features/houses_list/data/repositories/got_houses_list_repository_impl.dart';
+import 'package:got_app/features/houses_list/domain/repositories/got_houses_list_repository.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
-import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_state.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 
-class HousesListFeature implements InjectionFeature {
+class GOTHousesListFeature implements InjectionFeature {
   @override
   FutureOr<void> registerDependencies({
     required Injector injector,
   }) {
     injector
       ..registerFactory<Dio>(() => Dio())
-      ..registerFactory<GOTHousesDatasource>(
+      ..registerFactory<GOTHousesListDatasource>(
         () => GOTHousesDatasourceImpl(dioClient: injector.get<Dio>()),
       )
-      ..registerFactory<GOTHousesRepository>(
-        () => HousesRepositoryImpl(
-          gotHousesDataSource: injector.get<GOTHousesDatasource>(),
+      ..registerFactory<GOTHousesListRepository>(
+        () => GOTHousesListRepositoryImpl(
+          gotHousesDataSource: injector.get<GOTHousesListDatasource>(),
           dioClient: injector.get<Dio>(),
         ),
       )
       ..registerFactory<GetCharactersImageUseCase>(
         () => GetCharactersImageUseCaseImpl(
-          gotHousesRepository: injector.get<GOTHousesRepository>(),
+          gotHousesRepository: injector.get<GOTHousesListRepository>(),
         ),
       )
-      ..registerFactory<GetHousesUseCase>(
+      ..registerFactory<GetHousesListUseCase>(
         () => GetHousesUseCaseImpl(
-          gotHousesRepository: injector.get<GOTHousesRepository>(),
+          gotHousesRepository: injector.get<GOTHousesListRepository>(),
         ),
       )
       ..registerFactory<GOTHousesStateBackup>(
         () => GOTHousesStateBackup(
-          getHousesUseCase: injector.get<GetHousesUseCase>(),
+          getHousesUseCase: injector.get<GetHousesListUseCase>(),
           getCharactersImageUseCase: injector.get<GetCharactersImageUseCase>(),
         ),
       );

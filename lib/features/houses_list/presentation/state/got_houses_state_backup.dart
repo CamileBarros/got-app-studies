@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:got_app/features/houses_list/data/model/get_characters_image_response_model.dart';
-import 'package:got_app/features/houses_list/data/model/get_houses_model_response.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
@@ -12,7 +10,7 @@ class GOTHousesStateBackup {
     required this.getHousesUseCase,
     required this.getCharactersImageUseCase,
   });
-  final GetHousesUseCase getHousesUseCase;
+  final GetHousesListUseCase getHousesUseCase;
   final GetCharactersImageUseCase getCharactersImageUseCase;
 
   ValueNotifier<List<GetHousesListEntity>> housesList =

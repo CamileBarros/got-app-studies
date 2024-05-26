@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_houses_list_entity.dart';
 

@@ -1,16 +1,16 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:got_app/features/houses_list/data/data_source/got_houses_data_source.dart';
+import 'package:got_app/features/houses_list/data/data_source/got_houses_list_data_source.dart';
 import 'package:got_app/features/houses_list/data/model/get_characters_image_response_model.dart';
 import 'package:got_app/features/houses_list/data/model/get_houses_model_response.dart';
-import 'package:got_app/features/houses_list/domain/repositories/got_houses_repository.dart';
+import 'package:got_app/features/houses_list/domain/repositories/got_houses_list_repository.dart';
 
-class HousesRepositoryImpl implements GOTHousesRepository {
-  final GOTHousesDatasource gotHousesDataSource;
+class GOTHousesListRepositoryImpl implements GOTHousesListRepository {
+  final GOTHousesListDatasource gotHousesDataSource;
   final Dio dioClient;
 
-  HousesRepositoryImpl(
+  GOTHousesListRepositoryImpl(
       {required this.gotHousesDataSource, required this.dioClient});
 
   @override

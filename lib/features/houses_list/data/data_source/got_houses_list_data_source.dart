@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:got_app/features/houses_list/data/model/get_characters_image_response_model.dart';
 import 'package:got_app/features/houses_list/data/model/get_houses_model_response.dart';
 
-abstract class GOTHousesDatasource {
+abstract class GOTHousesListDatasource {
   Future<List<GetHousesListResponseModel>> getHouses();
   Future<List<GetCharactersImageResponseModel>> getCharactersImage();
 }
 
-class GOTHousesDatasourceImpl implements GOTHousesDatasource {
+class GOTHousesDatasourceImpl implements GOTHousesListDatasource {
   final Dio dioClient;
 
   GOTHousesDatasourceImpl({required this.dioClient});
