@@ -4,8 +4,8 @@ import 'package:got_app/features/houses_list/presentation/widgets/got_app_bar.da
 import 'package:got_app/features/houses_list/presentation/widgets/page_view_houses_card.dart';
 
 class HousesPage extends StatefulWidget {
-  const HousesPage({required this.gotHousesStateBackup, super.key});
-  final GOTHousesListState gotHousesStateBackup;
+  const HousesPage({required this.gotHousesListState, super.key});
+  final GOTHousesListState gotHousesListState;
 
   @override
   State<HousesPage> createState() => _HousesPageState();
@@ -16,7 +16,7 @@ class _HousesPageState extends State<HousesPage> {
 
   @override
   void initState() {
-    _loadDataFuture = widget.gotHousesStateBackup.loadData();
+    _loadDataFuture = widget.gotHousesListState.loadData();
 
     super.initState();
   }
@@ -28,14 +28,14 @@ class _HousesPageState extends State<HousesPage> {
       appBar: GOTAppBar(
         title: 'Game of Thrones Houses',
         onTapRefresh: () async {
-          await widget.gotHousesStateBackup.loadData();
+          await widget.gotHousesListState.loadData();
         },
       ),
       body: FutureBuilder<void>(
           future: _loadDataFuture,
           builder: (context, snapshot) {
             return PageViewHousesCard(
-                gotHousesStateBackup: widget.gotHousesStateBackup);
+                gotHousesStateBackup: widget.gotHousesListState);
           }),
     );
   }

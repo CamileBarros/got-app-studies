@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/houses',
         routes: {
           '/houses': (context) => HousesPage(
-                gotHousesStateBackup: GetIt.I.get<GOTHousesListState>(),
+                gotHousesListState: GetIt.I.get<GOTHousesListState>(),
               ),
           '/house_list_details': (context) {
             final Map<String, dynamic> arguments = ModalRoute.of(context)
