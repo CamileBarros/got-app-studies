@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:got_app/features/core/injection/got_app_dependency_inicializer.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/members_house_entity.dart';
-import 'package:got_app/features/houses_list/domain/use_cases/get_characters_image_use_case.dart';
-import 'package:got_app/features/houses_list/domain/use_cases/get_houses_list_use_case.dart';
 import 'package:got_app/features/houses_list/presentation/pages/got_house_list_details.dart';
 import 'package:got_app/features/houses_list/presentation/pages/got_houses_page.dart';
-import 'package:got_app/features/houses_list/presentation/state/cubit/got_houses_cubit.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 
 Future<void> main() async {

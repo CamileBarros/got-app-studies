@@ -25,8 +25,11 @@ class _HousesPageState extends State<HousesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const GOTAppBar(
+      appBar: GOTAppBar(
         title: 'Game of Thrones Houses',
+        onTapRefresh: () async {
+          await widget.gotHousesStateBackup.loadData();
+        },
       ),
       body: FutureBuilder<void>(
           future: _loadDataFuture,

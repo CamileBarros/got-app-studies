@@ -1,11 +1,11 @@
+
 import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/domain/entities/get_characters_image_entity.dart';
 import 'package:got_app/features/houses_list/domain/entities/members_house_entity.dart';
-import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/got_app_bar.dart';
-import 'package:collection/src/iterable_extensions.dart';
+import 'package:got_app/features/houses_list/utils/helpers/got_house_list_details_helper.dart';
 
-class HouseListDetails extends StatelessWidget {
+class HouseListDetails extends StatelessWidget with GOTHouseListDetailsHelper {
   final List<MembersHouseEntity> membersHouse;
   final List<GetCharactersImageEntity> imageCharacters;
   final String title;
@@ -17,8 +17,10 @@ class HouseListDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+      backgroundColor: Colors.white,
       appBar: GOTAppBar(
         title: title,
+        
       ),
       body: Builder(builder: (context) {
         if (membersHouse.isEmpty) {
@@ -31,19 +33,12 @@ class HouseListDetails extends StatelessWidget {
           itemBuilder: (_, int index) {
             final member = membersHouse[index];
 
-            final imageUrl = imageCharacters
-                    .firstWhereOrNull((element) =>
-                        element.firstName.toLowerCase() ==
-                        member.slug.toLowerCase())
-                    ?.imageUrl ??
-                '';
-
             return ListTile(
               title: Text(membersHouse[index].name),
-              subtitle: Text(membersHouse[index].slug),
-              leading: imageUrl != ''
+              subtitle: Text(getMemberTitle(member.slug, imageCharacters)),
+              leading: getImageUrl(member.slug, imageCharacters) != ''
                   ? CircleAvatar(
-                      backgroundImage: NetworkImage(imageUrl),
+                      backgroundImage: NetworkImage(getImageUrl(member.slug, imageCharacters)),
                     )
                   : const Icon(Icons.person),
             );
@@ -51,9 +46,10 @@ class HouseListDetails extends StatelessWidget {
           separatorBuilder: (BuildContext context, int index) {
             return Container(
               height: 8,
-              color: Colors.grey,
+              color: const Color.fromARGB(255, 236, 233, 233),
             );
           },
         );
       }));
+
 }

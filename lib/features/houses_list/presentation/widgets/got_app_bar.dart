@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
 
 class GOTAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const GOTAppBar({super.key, required this.title});
+  const GOTAppBar({super.key, required this.title, this.onTapRefresh,});
 final String title;
+final VoidCallback? onTapRefresh;
   @override
   Widget build(BuildContext context) => AppBar(
         backgroundColor: Colors.white,
         title: Text(
           title,
-          style: TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: 14),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          },
-        ),
+        leading: 
+        Navigator.of(context).canPop() ?
+        Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20),
+            onPressed: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
+          ),
+        ) : null,
         actions: [
+          if (onTapRefresh != null)
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: IconButton(
-              icon: const Icon(Icons.search_rounded),
-              onPressed: () {},
+              icon: const Icon(Icons.refresh_outlined, ),
+              onPressed: onTapRefresh
             ),
           ),
+
         ],
+       
       );
 
   @override

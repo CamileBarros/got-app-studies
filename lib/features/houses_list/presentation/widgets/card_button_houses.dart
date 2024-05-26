@@ -13,9 +13,6 @@ class CardButtonHouses extends StatelessWidget {
     this.colorBanner1 = Colors.black,
     this.colorBanner2 = Colors.black,
     this.colorText = Colors.white,
-    this.hasImageBackground = false,
-    this.size = EducationalBannerSize.medium,
-    this.hasIcon = true,
     this.borderColor = Colors.black,
     super.key,
   });
@@ -25,18 +22,13 @@ class CardButtonHouses extends StatelessWidget {
   final Color? colorBanner1;
   final Color? colorBanner2;
   final Color? colorText;
-  final bool hasImageBackground;
-  final EducationalBannerSize size;
-  final bool hasIcon;
   final Color? borderColor;
 
   @override
   Widget build(BuildContext context) => InkWell(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.all(
-            _getBannersSize(size),
-          ),
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             border: Border.all(
               color: borderColor ?? Colors.white,
@@ -56,7 +48,6 @@ class CardButtonHouses extends StatelessWidget {
               if (title.isNotEmpty) ...[
                 Text(
                   title,
-             
                 ),
                 const SizedBox(height: 8),
               ],
@@ -70,37 +61,27 @@ class CardButtonHouses extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: const TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Cinzel',
-                                  fontWeight: FontWeight.w600,
-                              
-                                ),
+                        fontSize: 16,
+                        fontFamily: 'Cinzel',
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
-                  if (hasIcon)
-                    DecoratedBox(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                        ),
-                        borderRadius: BorderRadius.circular(100),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.white,
                       ),
-                      child: const Padding(
-                          padding: EdgeInsets.all(12),
-                          child: Icon(Icons.chevron_right_outlined)),
+                      borderRadius: BorderRadius.circular(100),
                     ),
+                    child: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Icon(Icons.chevron_right_outlined)),
+                  ),
                 ],
               ),
             ],
           ),
         ),
       );
-  double _getBannersSize(EducationalBannerSize size) {
-    switch (size) {
-      case EducationalBannerSize.small:
-        return 12.0;
-      case EducationalBannerSize.medium:
-        return 24.0;
-    }
-  }
 }

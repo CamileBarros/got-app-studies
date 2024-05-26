@@ -62,7 +62,6 @@ class PageViewHousesCard extends StatelessWidget {
                             ),
                             const SizedBox(height: 32),
                             CardButtonHouses(
-                              size: EducationalBannerSize.medium,
                               onTap: () {
                                 Navigator.of(context).pushNamed(
                                   '/house_list_details',
