@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 enum EducationalBannerSize {
   small,
@@ -9,6 +10,7 @@ class CardButtonHouses extends StatelessWidget {
   const CardButtonHouses({
     required this.description,
     required this.onTap,
+    required this.imageUrl,
     this.title = '',
     this.colorBanner1 = Colors.black,
     this.colorBanner2 = Colors.black,
@@ -23,6 +25,7 @@ class CardButtonHouses extends StatelessWidget {
   final Color? colorBanner2;
   final Color? colorText;
   final Color? borderColor;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) => InkWell(
@@ -51,6 +54,12 @@ class CardButtonHouses extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
               ],
+              SvgPicture.asset(
+                width: 42,
+                height: 42,
+                'assets/images/$imageUrl',
+              ),
+              const SizedBox(height: 42),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -67,17 +76,17 @@ class CardButtonHouses extends StatelessWidget {
                       ),
                     ),
                   ),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.white,
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Icon(Icons.chevron_right_outlined)),
-                  ),
+                  // DecoratedBox(
+                  //   decoration: BoxDecoration(
+                  //     border: Border.all(
+                  //       color: Colors.white,
+                  //     ),
+                  //     borderRadius: BorderRadius.circular(100),
+                  //   ),
+                  //   child: const Padding(
+                  //       padding: EdgeInsets.all(12),
+                  //       child: Icon(Icons.chevron_right_outlined)),
+                  // ),
                 ],
               ),
             ],

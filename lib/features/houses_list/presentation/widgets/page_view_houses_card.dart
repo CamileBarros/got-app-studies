@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_state_backup.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
 import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
+import 'package:got_app/features/houses_list/utils/enum/houses_enum.dart';
+import 'package:got_app/features/houses_list/utils/helpers/got_house_list_helper.dart';
 
-class PageViewHousesCard extends StatelessWidget {
+class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
   final GOTHousesStateBackup gotHousesStateBackup;
   const PageViewHousesCard({
     super.key,
@@ -28,11 +31,11 @@ class PageViewHousesCard extends StatelessWidget {
             child: Text(gotHousesStateBackup.errorMessage.value),
           );
         }
-    
+
         return Column(
           children: [
             SizedBox(
-              height: MediaQuery.sizeOf(context).height / 2,
+              height: MediaQuery.sizeOf(context).height / 1.5,
               child: PageView(
                   controller: gotHousesStateBackup.pageController.value,
                   onPageChanged: gotHousesStateBackup.onPageChanged,
@@ -73,12 +76,16 @@ class PageViewHousesCard extends StatelessWidget {
                                   },
                                 );
                               },
-                              description: house.name,
+                              imageUrl: getPathByHouseName(house.name),
+                              description:
+                                  house.name.replaceAll('House ', 'House\n'),
                               colorBanner1:
-                                  const Color.fromARGB(255, 1, 59, 106),
+                                  
+                                  Colors.white,
                               colorBanner2:
-                                  const Color.fromARGB(255, 155, 200, 237),
+                                  const Color.fromARGB(255, 1, 59, 106),
                             ),
+                          
                           ],
                         ),
                       ),
@@ -95,7 +102,9 @@ class PageViewHousesCard extends StatelessWidget {
                   height: 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: gotHousesStateBackup.currentPage.value == index ? Colors.blue : Colors.grey,
+                    color: gotHousesStateBackup.currentPage.value == index
+                        ? Colors.blue
+                        : Colors.grey,
                   ),
                 );
               }),
