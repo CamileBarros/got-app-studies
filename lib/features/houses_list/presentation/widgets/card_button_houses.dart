@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 enum EducationalBannerSize {
@@ -28,68 +29,55 @@ class CardButtonHouses extends StatelessWidget {
   final String imageUrl;
 
   @override
-  Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: borderColor ?? Colors.white,
+  Widget build(BuildContext context) => Material(
+        color: Colors.transparent,
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        elevation: 4,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    colorBanner1 ?? Colors.black,
+                    colorBanner2 ?? Colors.black,
+                  ]),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  colorBanner1 ?? Colors.black,
-                  colorBanner2 ?? Colors.black,
-                ]),
-            borderRadius: const BorderRadius.all(Radius.circular(16)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (title.isNotEmpty) ...[
-                Text(
-                  title,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 60,
+                  child: SvgPicture.asset(
+                    alignment: Alignment.topLeft,
+                    'assets/images/$imageUrl',
+                  ),
                 ),
-                const SizedBox(height: 8),
-              ],
-              SvgPicture.asset(
-                width: 42,
-                height: 42,
-                'assets/images/$imageUrl',
-              ),
-              const SizedBox(height: 42),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    child: Text(
-                      description,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Cinzel',
-                        fontWeight: FontWeight.w600,
+                const SizedBox(height: 42),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: Text(
+                        description,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Cinzel',
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
                       ),
                     ),
-                  ),
-                  // DecoratedBox(
-                  //   decoration: BoxDecoration(
-                  //     border: Border.all(
-                  //       color: Colors.white,
-                  //     ),
-                  //     borderRadius: BorderRadius.circular(100),
-                  //   ),
-                  //   child: const Padding(
-                  //       padding: EdgeInsets.all(12),
-                  //       child: Icon(Icons.chevron_right_outlined)),
-                  // ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       );

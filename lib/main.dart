@@ -45,10 +45,16 @@ class MyApp extends StatelessWidget {
             final List<GetCharactersImageEntity> imageCharacters =
                 arguments['imageCharacters'] as List<GetCharactersImageEntity>;
 
+            final Color? colorTitle = arguments['colorTitle'] as Color?;
+
+            final String imageUrl = arguments['imageUrl'] as String;
+
             return HouseListDetails(
               membersHouse: membersHouse,
               imageCharacters: imageCharacters,
               title: title,
+              colorTitle: colorTitle,
+              imageUrl: imageUrl,
             );
           }
         });

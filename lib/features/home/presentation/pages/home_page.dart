@@ -5,14 +5,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Center(
-              child: Text('Welcome to the Game of Thrones App'),
-            ),
-          ],
-        ),  
-      );
+    appBar: AppBar(
+      title: const Text('Home Page'),
+    ),
+    body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const <Widget>[
+          Text(
+            'Home Page',
+            style: TextStyle(fontSize: 24),
+          ),
+        ],
+      ),
+    ),
+  );
 }

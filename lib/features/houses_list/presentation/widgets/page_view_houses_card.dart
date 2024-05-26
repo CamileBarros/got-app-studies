@@ -5,6 +5,7 @@ import 'package:got_app/features/houses_list/presentation/widgets/card_button_ho
 import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 import 'package:got_app/features/houses_list/utils/enum/houses_enum.dart';
 import 'package:got_app/features/houses_list/utils/helpers/got_house_list_helper.dart';
+import 'package:lottie/lottie.dart';
 
 class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
   final GOTHousesStateBackup gotHousesStateBackup;
@@ -23,7 +24,10 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
         if (gotHousesStateBackup.statusPage.value ==
             GOTHousesListPageStateEnum.loading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child:Image(
+                image: AssetImage('assets/images/icon_loading.gif'),
+                fit: BoxFit.cover,
+              ),
           );
         } else if (gotHousesStateBackup.statusPage.value ==
             GOTHousesListPageStateEnum.error) {
@@ -73,19 +77,18 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
                                     'imageCharacters': gotHousesStateBackup
                                         .imageCharacters.value,
                                     'title': house.name,
+                                    'colorTitle':
+                                        getColorByHouseName(house.name),
+                                    'imageUrl': getPathByHouseName(house.name),
                                   },
                                 );
                               },
                               imageUrl: getPathByHouseName(house.name),
                               description:
                                   house.name.replaceAll('House ', 'House\n'),
-                              colorBanner1:
-                                  
-                                  Colors.white,
-                              colorBanner2:
-                                  const Color.fromARGB(255, 1, 59, 106),
+                              colorBanner1: const Color.fromARGB(255, 243, 243, 243),
+                              colorBanner2: getColorByHouseName(house.name),
                             ),
-                          
                           ],
                         ),
                       ),
@@ -103,7 +106,8 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: gotHousesStateBackup.currentPage.value == index
-                        ? Colors.blue
+                        ? getColorByHouseName(
+                            gotHousesStateBackup.housesList.value[index].name)
                         : Colors.grey,
                   ),
                 );
