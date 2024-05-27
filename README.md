@@ -1,7 +1,7 @@
 # Projeto de Listagem das Casas de Game of Thrones
 
 ## Visão Geral
-Bem-vindo ao projeto de estudos Listagem das Casas de Game of Thrones! Este aplicativo fornece uma listagem das casas e seus membros da icônica série Game of Thrones. O aplicativo utiliza gerenciamento de estado, obtenção de dados, filtragem e animações para garantir uma experiência de usuário contínua e envolvente.
+Bem-vindo ao projeto de estudos Listagem das Casas de Game of Thrones! Este aplicativo fornece uma listagem das casas e seus membros da icônica série Game of Thrones. O aplicativo utiliza gerenciamento de estado, obtenção de dados, filtragem e animações para garantir uma experiência de usuário contínua e envolvente. Foi utilizado clean architecture nesse projeto.
 
 ![Simulator Screenshot - iPhone 15 - 2024-05-27 at 09 15 47](https://github.com/CamileBarros/got-app-studies/assets/103670262/810150b3-402c-4d56-859d-ffc2411f7c2b) ![Simulator Screenshot - iPhone 15 - 2024-05-27 at 09 15 29](https://github.com/CamileBarros/got-app-studies/assets/103670262/8ad69b50-a67b-413a-845d-065c7344b15e) ![Simulator Screenshot - iPhone 15 - 2024-05-27 at 09 15 39](https://github.com/CamileBarros/got-app-studies/assets/103670262/a39f0d5d-9f2e-44bb-9074-de9c2fc8d17e)
 
@@ -30,9 +30,8 @@ Para melhorar a experiência do usuário durante o carregamento de dados, uma an
 Para proporcionar uma experiência de usuário suave e envolvente, o aplicativo apresenta uma transição animada da visualização do card da casa para a visualização detalhada dos membros usando `AnimatedSwitcher`. Esta animação melhora o fluxo visual e torna a navegação entre telas mais interativa e agradável.
 
 ### Testes
-O aplicativo foi rigorosamente testado para garantir confiabilidade e desempenho:
-- **Testes de Widget**: Realizados nas principais telas para verificar elementos e interações da interface do usuário.
-- **Testes Unitários**: Focados na camada de dados para garantir a integridade dos dados e o funcionamento correto da lógica central.
+O aplicativo consta com testes para garantir o desempenho:
+- **Testes Unitários**: Focados na camada de dados para garantir a integridade dos dados.
 
 ## Começando
 Para começar com o projeto, clone o repositório e siga as instruções de configuração abaixo.
