@@ -14,7 +14,7 @@ class GetHousesListResponseModel extends GetHousesListEntity {
       slug: map['slug'] ?? '',
       name: map['name'] ?? '',
       members: List<MembersHouseModel>.from(
-        (map['members'] ?? List<MembersHouseModel> ).map<MembersHouseModel>(
+        (map['members'] ?? []).map<MembersHouseModel>(
           (x) => MembersHouseModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
