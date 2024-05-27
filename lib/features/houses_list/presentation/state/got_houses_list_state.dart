@@ -18,7 +18,7 @@ class GOTHousesListState {
   ValueNotifier<List<GetCharactersImageEntity>> imageCharacters =
       ValueNotifier<List<GetCharactersImageEntity>>([]);
   ValueNotifier<GOTHousesListPageStateEnum> statusPage =
-      ValueNotifier(GOTHousesListPageStateEnum.loading);
+      ValueNotifier(GOTHousesListPageStateEnum.initial);
   ValueNotifier<String> errorMessage = ValueNotifier('');
   ValueNotifier<int> currentPage = ValueNotifier<int>(0);
   ValueNotifier<PageController> pageController =

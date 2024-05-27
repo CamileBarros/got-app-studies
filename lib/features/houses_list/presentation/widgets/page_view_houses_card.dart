@@ -1,38 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:got_app/features/houses_list/presentation/state/got_houses_list_state.dart';
 import 'package:got_app/features/houses_list/presentation/widgets/card_button_houses.dart';
-import 'package:got_app/features/houses_list/utils/enum/got_houses_list_page_status_enum.dart';
 import 'package:got_app/features/houses_list/utils/helpers/got_house_list_helper.dart';
 
 class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
-  final GOTHousesListState gotHousesStateBackup;
+  final GOTHousesListState gotHousesListState;
   const PageViewHousesCard({
     super.key,
-    required this.gotHousesStateBackup,
+    required this.gotHousesListState,
   });
 
   @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-      animation: Listenable.merge([
-        gotHousesStateBackup.statusPage,
-        gotHousesStateBackup.currentPage,
-      ]),
-      builder: (_, __) {
-        if (gotHousesStateBackup.statusPage.value ==
-            GOTHousesListPageStateEnum.loading) {
-          return const Center(
-            child: Image(
-              image: AssetImage('assets/images/icon_loading.gif'),
-              fit: BoxFit.cover,
-            ),
-          );
-        } else if (gotHousesStateBackup.statusPage.value ==
-            GOTHousesListPageStateEnum.error) {
-          return Center(
-            child: Text(gotHousesStateBackup.errorMessage.value),
-          );
-        }
-
+  Widget build(BuildContext context) => ValueListenableBuilder(
+      valueListenable: gotHousesListState.currentPage,
+      builder: (_, currentPage, __) {
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -40,10 +21,9 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
                 height: MediaQuery.sizeOf(context).height / 1.3,
                 child: PageView(
                     physics: const BouncingScrollPhysics(),
-                    controller: gotHousesStateBackup.pageController.value,
-                    onPageChanged: gotHousesStateBackup.onPageChanged,
-                    children:
-                        gotHousesStateBackup.housesList.value.map((house) {
+                    controller: gotHousesListState.pageController.value,
+                    onPageChanged: gotHousesListState.onPageChanged,
+                    children: gotHousesListState.housesList.value.map((house) {
                       return SizedBox(
                         height: MediaQuery.sizeOf(context).height / 3,
                         child: Padding(
@@ -75,7 +55,7 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
                                       '/house_list_details',
                                       arguments: {
                                         'membersHouse': house.members,
-                                        'imageCharacters': gotHousesStateBackup
+                                        'imageCharacters': gotHousesListState
                                             .imageCharacters.value,
                                         'title': house.name,
                                         'colorTitle':
@@ -107,16 +87,16 @@ class PageViewHousesCard extends StatelessWidget with GOTHousesListHelper {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                    gotHousesStateBackup.housesList.value.length, (index) {
+                    gotHousesListState.housesList.value.length, (index) {
                   return Container(
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     width: 8,
                     height: 8,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: gotHousesStateBackup.currentPage.value == index
+                      color: currentPage == index
                           ? getColorByHouseName(
-                              gotHousesStateBackup.housesList.value[index].name)
+                              gotHousesListState.housesList.value[index].name)
                           : Colors.grey,
                     ),
                   );
